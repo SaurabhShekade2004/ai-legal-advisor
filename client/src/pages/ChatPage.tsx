@@ -6,18 +6,17 @@ import ChatInterface from '@/components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLocation, Link } from 'wouter';
 
+interface Conversation {
+  id: string;
+  title: string;
+}
+
 export default function ChatPage() {
   const { user, logout } = useAuth();
   const [, setLocation] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  
-  // Mock conversations data
-  const [conversations] = useState([
-    { id: '1', title: 'Property dispute question', timestamp: '2 hours ago' },
-    { id: '2', title: 'Contract review needed', timestamp: 'Yesterday' },
-    { id: '3', title: 'Employment law query', timestamp: '3 days ago' },
-    { id: '4', title: 'Tenant rights inquiry', timestamp: '5 days ago' }
-  ]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [activeConversationId, setActiveConversationId] = useState<string>('');
 
   const handleLogout = () => {
     logout();
@@ -25,11 +24,27 @@ export default function ChatPage() {
   };
 
   const handleNewChat = () => {
+    const newId = Date.now().toString();
+    setActiveConversationId(newId);
     console.log('Starting new chat...');
   };
 
   const handleSelectConversation = (id: string) => {
+    setActiveConversationId(id);
     console.log('Selected conversation:', id);
+  };
+
+  const handleAddConversation = (title: string) => {
+    const newConversation: Conversation = {
+      id: activeConversationId || Date.now().toString(),
+      title: title
+    };
+    
+    setConversations(prev => {
+      const exists = prev.find(c => c.id === newConversation.id);
+      if (exists) return prev;
+      return [newConversation, ...prev];
+    });
   };
 
   return (
@@ -37,7 +52,7 @@ export default function ChatPage() {
       {sidebarOpen && (
         <ChatSidebar 
           conversations={conversations}
-          activeConversationId="1"
+          activeConversationId={activeConversationId}
           onNewChat={handleNewChat}
           onSelectConversation={handleSelectConversation}
         />
@@ -67,7 +82,7 @@ export default function ChatPage() {
           
           <div className="flex items-center gap-4">
             <Link href="/about-constitution">
-              <Button variant="ghost" data-testid="link-about-constitution">
+              <Button variant="outline" className="border-primary/50" data-testid="link-about-constitution">
                 About Constitution
               </Button>
             </Link>
@@ -88,7 +103,7 @@ export default function ChatPage() {
           </div>
         </header>
         
-        <ChatInterface />
+        <ChatInterface onAddConversation={handleAddConversation} />
       </div>
     </div>
   );

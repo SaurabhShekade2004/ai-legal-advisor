@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Scale, Sparkles } from 'lucide-react';
-import ladyJusticeImg from '@assets/image_1759810088604.png';
+import ladyJusticeImg from '@assets/stock_images/goddess_of_justice_l_52ecb491.jpg';
 
 interface HeroProps {
   onGetStarted: () => void;
@@ -38,12 +38,12 @@ export default function Hero({ onGetStarted }: HeroProps) {
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative flex justify-center items-center">
             <div className="absolute inset-0 bg-gradient-purple-blue opacity-20 blur-3xl rounded-full"></div>
             <img 
               src={ladyJusticeImg} 
               alt="Lady Justice Statue" 
-              className="relative rounded-2xl shadow-2xl w-full h-auto object-cover"
+              className="relative rounded-2xl shadow-2xl w-3/4 h-auto object-cover"
               data-testid="img-hero-justice"
             />
           </div>

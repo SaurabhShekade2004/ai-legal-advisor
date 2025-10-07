@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { FileText, Scale, MessageSquare, Shield } from 'lucide-react';
+import { FileText, Scale, MessageSquare, Shield, LogIn } from 'lucide-react';
 import Hero from '@/components/Hero';
 import FeatureCard from '@/components/FeatureCard';
 import HowItWorks from '@/components/HowItWorks';
@@ -34,7 +34,7 @@ const features = [
 
 export default function LandingPage() {
   const [loginOpen, setLoginOpen] = useState(false);
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, logout } = useAuth();
   const [, setLocation] = useLocation();
 
   const handleGetStarted = () => {
@@ -52,6 +52,37 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen">
+      <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm px-6 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-lg bg-gradient-purple-blue flex items-center justify-center">
+              <Scale className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-lg bg-gradient-purple-blue bg-clip-text text-transparent">
+              AI Legal Advisor
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? (
+              <>
+                <Button variant="outline" onClick={() => setLocation('/chat')} data-testid="button-go-to-chat">
+                  Go to Chat
+                </Button>
+                <Button variant="outline" onClick={logout} data-testid="button-logout-header">
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button variant="outline" onClick={() => setLoginOpen(true)} data-testid="button-login-header">
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+      
       <Hero onGetStarted={handleGetStarted} />
       
       <div className="py-20 px-6 bg-background">

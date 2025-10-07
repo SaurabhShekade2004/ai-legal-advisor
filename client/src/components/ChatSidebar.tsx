@@ -1,11 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Plus, MessageSquare, Clock } from 'lucide-react';
+import { Plus, MessageSquare } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface Conversation {
   id: string;
   title: string;
-  timestamp: string;
 }
 
 interface ChatSidebarProps {
@@ -55,10 +54,6 @@ export default function ChatSidebar({
                 <MessageSquare className="w-4 h-4 mt-1 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{conv.title}</p>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                    <Clock className="w-3 h-3" />
-                    {conv.timestamp}
-                  </p>
                 </div>
               </div>
             </button>

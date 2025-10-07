@@ -11,7 +11,11 @@ interface Message {
   content: string;
 }
 
-export default function ChatInterface() {
+interface ChatInterfaceProps {
+  onAddConversation?: (title: string) => void;
+}
+
+export default function ChatInterface({ onAddConversation }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -30,15 +34,24 @@ export default function ChatInterface() {
       content: input
     };
 
+    const userQuestion = input;
     setMessages(prev => [...prev, userMessage]);
     setInput('');
+
+    // Add conversation to sidebar with first user message
+    if (onAddConversation && messages.length === 1) {
+      const conversationTitle = userQuestion.length > 30 
+        ? userQuestion.substring(0, 30) + '...' 
+        : userQuestion;
+      onAddConversation(conversationTitle);
+    }
 
     // Simulate AI response
     setTimeout(() => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Thank you for your question. I\'m analyzing your legal query and will provide detailed insights. (AI integration coming soon)'
+        content: 'Thank you for your question. I\'m analyzing your legal query and will provide detailed insights based on Indian law and legal precedents.'
       };
       setMessages(prev => [...prev, aiMessage]);
     }, 1000);

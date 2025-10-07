@@ -1,9 +1,9 @@
 import ChatSidebar from '../ChatSidebar';
 
 const mockConversations = [
-  { id: '1', title: 'Property dispute question', timestamp: '2 hours ago' },
-  { id: '2', title: 'Contract review needed', timestamp: 'Yesterday' },
-  { id: '3', title: 'Employment law query', timestamp: '3 days ago' }
+  { id: '1', title: 'Property dispute question' },
+  { id: '2', title: 'Contract review needed' },
+  { id: '3', title: 'Employment law query' }
 ];
 
 export default function ChatSidebarExample() {
