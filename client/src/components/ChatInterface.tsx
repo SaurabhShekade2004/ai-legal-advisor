@@ -11,11 +11,7 @@ interface Message {
   content: string;
 }
 
-interface ChatInterfaceProps {
-  onAddConversation?: (title: string) => void;
-}
-
-export default function ChatInterface({ onAddConversation }: ChatInterfaceProps) {
+export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -34,17 +30,8 @@ export default function ChatInterface({ onAddConversation }: ChatInterfaceProps)
       content: input
     };
 
-    const userQuestion = input;
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-
-    // Update conversation title with first user message
-    if (onAddConversation && messages.length === 1) {
-      const conversationTitle = userQuestion.length > 30 
-        ? userQuestion.substring(0, 30) + '...' 
-        : userQuestion;
-      onAddConversation(conversationTitle);
-    }
 
     // Simulate AI response
     setTimeout(() => {

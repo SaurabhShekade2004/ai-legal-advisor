@@ -24,34 +24,11 @@ export default function ChatPage() {
   };
 
   const handleNewChat = () => {
-    const newId = Date.now().toString();
-    setActiveConversationId(newId);
-    
-    // Add "New Chat" to conversations
-    const newConversation: Conversation = {
-      id: newId,
-      title: 'New Chat'
-    };
-    setConversations(prev => [newConversation, ...prev]);
     console.log('Starting new chat...');
   };
 
   const handleSelectConversation = (id: string) => {
-    setActiveConversationId(id);
     console.log('Selected conversation:', id);
-  };
-
-  const handleAddConversation = (title: string) => {
-    // Update existing "New Chat" conversation with the actual question
-    setConversations(prev => {
-      const existingIndex = prev.findIndex(c => c.id === activeConversationId);
-      if (existingIndex !== -1) {
-        const updated = [...prev];
-        updated[existingIndex] = { ...updated[existingIndex], title };
-        return updated;
-      }
-      return prev;
-    });
   };
 
   return (
@@ -110,7 +87,7 @@ export default function ChatPage() {
           </div>
         </header>
         
-        <ChatInterface onAddConversation={handleAddConversation} />
+        <ChatInterface />
       </div>
     </div>
   );
