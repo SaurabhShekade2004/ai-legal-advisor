@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Scale, Sparkles } from 'lucide-react';
-import ladyJusticeImg from '@assets/stock_images/goddess_of_justice_l_52ecb491.jpg';
+import ladyJusticeImg from '@assets/image_1759812165735.png';
 
 interface HeroProps {
   onGetStarted: () => void;

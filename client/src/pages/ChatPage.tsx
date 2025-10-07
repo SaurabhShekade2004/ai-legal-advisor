@@ -26,6 +26,13 @@ export default function ChatPage() {
   const handleNewChat = () => {
     const newId = Date.now().toString();
     setActiveConversationId(newId);
+    
+    // Add "New Chat" to conversations
+    const newConversation: Conversation = {
+      id: newId,
+      title: 'New Chat'
+    };
+    setConversations(prev => [newConversation, ...prev]);
     console.log('Starting new chat...');
   };
 
@@ -35,15 +42,15 @@ export default function ChatPage() {
   };
 
   const handleAddConversation = (title: string) => {
-    const newConversation: Conversation = {
-      id: activeConversationId || Date.now().toString(),
-      title: title
-    };
-    
+    // Update existing "New Chat" conversation with the actual question
     setConversations(prev => {
-      const exists = prev.find(c => c.id === newConversation.id);
-      if (exists) return prev;
-      return [newConversation, ...prev];
+      const existingIndex = prev.findIndex(c => c.id === activeConversationId);
+      if (existingIndex !== -1) {
+        const updated = [...prev];
+        updated[existingIndex] = { ...updated[existingIndex], title };
+        return updated;
+      }
+      return prev;
     });
   };
 

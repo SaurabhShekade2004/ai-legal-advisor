@@ -38,7 +38,7 @@ export default function ChatInterface({ onAddConversation }: ChatInterfaceProps)
     setMessages(prev => [...prev, userMessage]);
     setInput('');
 
-    // Add conversation to sidebar with first user message
+    // Update conversation title with first user message
     if (onAddConversation && messages.length === 1) {
       const conversationTitle = userQuestion.length > 30 
         ? userQuestion.substring(0, 30) + '...' 
