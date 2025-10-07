@@ -1,68 +1,30 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LogOut, Scale, Menu } from 'lucide-react';
-import ChatSidebar from '@/components/ChatSidebar';
+import { LogOut, Scale } from 'lucide-react';
 import ChatInterface from '@/components/ChatInterface';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLocation, Link } from 'wouter';
 
-interface Conversation {
-  id: string;
-  title: string;
-}
-
 export default function ChatPage() {
   const { user, logout } = useAuth();
   const [, setLocation] = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [activeConversationId, setActiveConversationId] = useState<string>('');
 
   const handleLogout = () => {
     logout();
     setLocation('/');
   };
 
-  const handleNewChat = () => {
-    console.log('Starting new chat...');
-  };
-
-  const handleSelectConversation = (id: string) => {
-    console.log('Selected conversation:', id);
-  };
-
   return (
     <div className="flex h-screen overflow-hidden">
-      {sidebarOpen && (
-        <ChatSidebar 
-          conversations={conversations}
-          activeConversationId={activeConversationId}
-          onNewChat={handleNewChat}
-          onSelectConversation={handleSelectConversation}
-        />
-      )}
-      
       <div className="flex-1 flex flex-col">
         <header className="border-b border-border bg-card/50 backdrop-blur-sm px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              data-testid="button-toggle-sidebar"
-            >
-              <Menu className="w-5 h-5" />
-            </Button>
-            
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-gradient-purple-blue flex items-center justify-center">
-                <Scale className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-lg bg-gradient-purple-blue bg-clip-text text-transparent">
-                AI Legal Advisor
-              </span>
-            </Link>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-lg bg-gradient-purple-blue flex items-center justify-center">
+              <Scale className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-lg bg-gradient-purple-blue bg-clip-text text-transparent">
+              AI Legal Advisor
+            </span>
+          </Link>
           
           <div className="flex items-center gap-4">
             <Link href="/about-constitution">
